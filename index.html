@@ -8,59 +8,157 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+            background: linear-gradient(135deg, #0f0f12 0%, #2c2c30 100%);
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
         }
         header {
-            background: rgba(15,32,39,0.85);
-            box-shadow: 0 4px 24px rgba(0,255,255,0.08);
+            background: rgba(15,15,18,0.95);
+            box-shadow: 0 4px 24px rgba(0,255,255,0.15);
+            padding: 1.5rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav {
+            display: flex;
+            gap: 2rem;
         }
         nav a {
             color: #39ff14;
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
         }
         nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
             background: #00fff7;
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem;
+            position: relative;
         }
         .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
             background: linear-gradient(90deg, #39ff14, #00fff7, #ff00cc);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(57,255,20,0.5);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #a0a0a0;
         }
         .cta-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
             background: linear-gradient(90deg, #00fff7, #ff00cc);
-            color: #0f2027;
-            box-shadow: 0 8px 32px rgba(0,255,255,0.15);
+            color: #0f0f12;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0,255,255,0.25);
+            transition: all 0.3s;
         }
         .cta-btn:hover {
-            box-shadow: 0 12px 40px rgba(255,0,204,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255,0,204,0.35);
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 4rem 2rem;
+            flex-wrap: wrap;
         }
         .feature-card {
-            background: rgba(0,255,255,0.07);
-            box-shadow: 0 4px 24px rgba(39,255,20,0.08);
+            background: rgba(0,255,255,0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 280px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,255,255,0.1);
+            transition: all 0.3s;
         }
         .feature-card:hover {
-            box-shadow: 0 12px 40px rgba(255,0,204,0.18);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(255,0,204,0.15);
+            border-color: rgba(255,0,204,0.3);
         }
         .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
             color: #00fff7;
         }
-        footer {
-            background: rgba(15,32,39,0.7);
+        .feature-card h2 {
             color: #39ff14;
+            margin-bottom: 1rem;
         }
-        .animated-bg svg stop:first-child {
-            stop-color: #39ff14;
+        .feature-card p {
+            color: #a0a0a0;
+            line-height: 1.6;
         }
-        .animated-bg svg stop:last-child {
-            stop-color: #0f2027;
+        footer {
+            background: rgba(15,15,18,0.95);
+            color: #39ff14;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
         }
-        /* Responsive */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        input, textarea {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            transition: all 0.3s;
+        }
+        input:focus, textarea:focus {
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(0,255,255,0.15);
+            outline: none;
+        }
         @media (max-width: 700px) {
-            .hero h1 { font-size: 2rem; }
-            .features { flex-direction: column; gap: 1.5rem;}
+            .hero h1 { 
+                font-size: 2.5rem; 
+            }
+            .features { 
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .feature-card {
+                width: auto;
+                margin: 0 1rem;
+            }
+            nav {
+                gap: 1rem;
+            }
         }
     </style>
 </head>
