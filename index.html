@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -19,8 +19,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 2rem 4vw;
-            background: rgba(30,60,114,0.8);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            background: rgba(15,32,39,0.85);
+            box-shadow: 0 4px 24px rgba(0,255,255,0.08);
             position: sticky;
             top: 0;
             z-index: 10;
@@ -31,7 +31,7 @@
             to { opacity: 1; transform: translateY(0);}
         }
         nav a {
-            color: #fff;
+            color: #39ff14;
             text-decoration: none;
             margin: 0 1.5rem;
             font-weight: 500;
@@ -42,7 +42,7 @@
             display: block;
             width: 0;
             height: 2px;
-            background: #ffb347;
+            background: #00fff7;
             transition: width .3s;
             position: absolute;
             left: 0; bottom: -4px;
@@ -64,7 +64,7 @@
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(90deg, #ffb347, #ffcc33);
+            background: linear-gradient(90deg, #39ff14, #00fff7, #ff00cc);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -85,17 +85,16 @@
             font-size: 1.1rem;
             border: none;
             border-radius: 32px;
-            background: linear-gradient(90deg, #ffb347, #ffcc33);
-            color: #1e3c72;
+            background: linear-gradient(90deg, #00fff7, #ff00cc);
+            color: #0f2027;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 8px 32px rgba(255,179,71,0.15);
+            box-shadow: 0 8px 32px rgba(0,255,255,0.15);
             transition: transform .2s, box-shadow .2s;
             animation: fadeInUp 1.8s cubic-bezier(.77,0,.175,1);
         }
         .cta-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 12px 40px rgba(255,179,71,0.25);
+            box-shadow: 0 12px 40px rgba(255,0,204,0.25);
         }
         /* Animated SVG background */
         .animated-bg {
@@ -115,20 +114,19 @@
             position: relative;
         }
         .feature-card {
-            background: rgba(255,255,255,0.07);
+            background: rgba(0,255,255,0.07);
             border-radius: 24px;
             padding: 2rem 1.5rem;
             min-width: 260px;
             max-width: 320px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 24px rgba(39,255,20,0.08);
             text-align: center;
             transition: transform .2s, box-shadow .2s;
             backdrop-filter: blur(4px);
             animation: cardFadeIn .8s cubic-bezier(.77,0,.175,1);
         }
         .feature-card:hover {
-            transform: translateY(-10px) scale(1.04);
-            box-shadow: 0 12px 40px rgba(255,255,255,0.18);
+            box-shadow: 0 12px 40px rgba(255,0,204,0.18);
         }
         @keyframes cardFadeIn {
             from { opacity: 0; transform: scale(0.95);}
@@ -137,7 +135,7 @@
         .feature-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: #ffb347;
+            color: #00fff7;
             animation: iconBounce 1.2s infinite alternate;
         }
         @keyframes iconBounce {
@@ -147,9 +145,9 @@
         footer {
             text-align: center;
             padding: 2rem 0;
-            color: #e0e0e0;
+            color: #39ff14;
             font-size: 1rem;
-            background: rgba(30,60,114,0.7);
+            background: rgba(15,32,39,0.7);
             margin-top: 4rem;
         }
         /* Responsive */
@@ -163,81 +161,4 @@
     <div class="animated-bg">
         <svg width="100%" height="100%" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
             <defs>
-                <linearGradient id="grad1" x1="0" y1="0" x2="1440" y2="900" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#ffb347" />
-                    <stop offset="1" stop-color="#2a5298" />
-                </linearGradient>
-            </defs>
-            <path id="wave1" d="M0,600 C360,800 1080,400 1440,600 L1440,900 L0,900 Z" fill="url(#grad1)" opacity="0.3"/>
-            <path id="wave2" d="M0,700 C480,900 960,500 1440,700 L1440,900 L0,900 Z" fill="#fff" opacity="0.08"/>
-        </svg>
-    </div>
-    <header>
-        <div style="font-size:1.5rem;font-weight:700;letter-spacing:2px;">MotionSite</div>
-        <nav>
-            <a href="#features">Features</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-    <section class="hero">
-        <h1>Experience Modern Web Motion</h1>
-        <p>Industry-level design, smooth animations, and stunning graphics—just like the world's top websites.</p>
-        <button class="cta-btn" onclick="window.location='#features'">Explore Features</button>
-    </section>
-    <section class="features" id="features">
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h2>Lightning Fast</h2>
-            <p>Optimized for speed and performance, ensuring a seamless user experience.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🎨</div>
-            <h2>Modern Graphics</h2>
-            <p>Beautiful gradients, SVG backgrounds, and crisp visuals for a premium look.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🌀</div>
-            <h2>Smooth Motions</h2>
-            <p>Subtle, professional animations and transitions throughout the site.</p>
-        </div>
-    </section>
-    <section id="about" style="text-align:center; margin:4rem 0;">
-        <h2 style="font-size:2rem; margin-bottom:1rem;">About MotionSite</h2>
-        <p style="font-size:1.1rem; color:#e0e0e0; max-width:600px; margin:auto;">
-            MotionSite is a demonstration of advanced web design using only HTML and CSS. It features animated backgrounds, interactive cards, and responsive layouts inspired by leading industry websites.
-        </p>
-    </section>
-    <section id="contact" style="text-align:center; margin:4rem 0;">
-        <h2 style="font-size:2rem; margin-bottom:1rem;">Contact Us</h2>
-        <form style="max-width:400px;margin:auto;">
-            <input type="text" placeholder="Your Name" required style="width:100%;padding:0.8rem;margin-bottom:1rem;border-radius:8px;border:none;">
-            <input type="email" placeholder="Your Email" required style="width:100%;padding:0.8rem;margin-bottom:1rem;border-radius:8px;border:none;">
-            <textarea placeholder="Message" required style="width:100%;padding:0.8rem;margin-bottom:1rem;border-radius:8px;border:none;height:100px;"></textarea>
-            <button type="submit" class="cta-btn" style="width:100%;">Send Message</button>
-        </form>
-    </section>
-    <footer>
-        &copy; 2025 MotionSite. All rights reserved.
-    </footer>
-    <script>
-        // Animate SVG waves
-        function animateWave(id, amplitude, speed) {
-            const wave = document.getElementById(id);
-            let t = 0;
-            function animate() {
-                t += 0.02 * speed;
-                let d = `M0,600 C360,${600+Math.sin(t)*amplitude} 1080,${400+Math.cos(t)*amplitude} 1440,600 L1440,900 L0,900 Z`;
-                if(id === 'wave2') {
-                    d = `M0,700 C480,${900+Math.sin(t)*amplitude} 960,${500+Math.cos(t)*amplitude} 1440,700 L1440,900 L0,900 Z`;
-                }
-                wave.setAttribute('d', d);
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-        animateWave('wave1', 40, 1.2);
-        animateWave('wave2', 30, 0.8);
-    </script>
-</body>
-</html>
+                <linearGradient id="grad1" x1="0" y1="0" x2="1440" y2="900" gradientUnits="userSpace
