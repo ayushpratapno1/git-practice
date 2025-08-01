@@ -4,11 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H1 Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+        p {
+            text-align: center;
+            color: #666;
+        }
+        .animated-bg {
+            background-color: #e0e0e0;
+            animation: fadeIn 2s ease-in-out infinite alternate;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animated-bg-text {
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+</style>
 </head>
 <body>
     <h1>Welcome to the H1 Page</h1>
     <p>This is a simple HTML page demonstrating the use of an H1 tag.</p>
     <p>Feel free to modify this page as you practice your Git skills!</p>
+    <div class="animated-bg">
+        <div class="animated-bg-text">
+            <h2>Animated Background</h2>
+            <p>This background will animate as you scroll.</p>
+        </div>
+    </div>
     <footer>
         <p>&copy; 2025 H1</p>
 </body>
