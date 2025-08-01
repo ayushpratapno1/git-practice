@@ -11,6 +11,30 @@
     <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/7838/7838457.png">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/7838/7838457.png">
+    
+    <!-- Add missing meta tags -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#0f0f12">
+    <meta name="color-scheme" content="dark">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" as="script">
+    
+    <!-- Add font display swap for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Add noscript fallback -->
+    <noscript>
+        <style>
+            .hero-content { opacity: 1 !important; transform: none !important; }
+            .feature-card { transform: none !important; }
+            .custom-cursor { display: none !important; }
+        </style>
+    </noscript>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -168,14 +192,17 @@
             overflow: hidden;
         }
         input, textarea {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
             background: rgba(255,255,255,0.05);
             color: #fff;
+            font-size: 1rem;
+            padding: 1rem;
             transition: all 0.3s;
         }
-        input:focus, textarea:focus {
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 20px rgba(0,255,255,0.15);
-            outline: none;
+        input:focus, textarea:focus, button:focus {
+            outline: 2px solid #39ff14;
+            outline-offset: 2px;
         }
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -330,6 +357,70 @@
                 background: rgba(255,255,255,0.2);
             }
         }
+
+        /* Add will-change for better performance on animations */
+        .hero-content, .feature-card, .custom-cursor {
+            will-change: transform;
+        }
+
+        /* Fix missing transitions and add hardware acceleration */
+        .feature-card {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Fix mobile nav bar height */
+        @media (max-width: 768px) {
+            nav {
+                height: 60px;
+                background: rgba(15,15,18,0.98);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 -4px 24px rgba(0,255,255,0.15);
+                z-index: 1000;
+            }
+        }
+
+        /* Fix form input accessibility */
+        input, textarea {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1rem;
+            padding: 1rem;
+        }
+
+        /* Add focus styles for accessibility */
+        input:focus, textarea:focus, button:focus {
+            outline: 2px solid #39ff14;
+            outline-offset: 2px;
+        }
+
+        /* Fix parallax section on mobile */
+        @media (max-width: 768px) {
+            .parallax-section {
+                background-attachment: scroll;
+                height: 70vh;
+            }
+        }
+
+        /* Fix text contrast issues */
+        .hero p, .feature-card p {
+            color: rgba(255,255,255,0.8);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Visually hide elements but keep them accessible to screen readers */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
     </style>
 </head>
 <body data-scroll-container>
@@ -337,11 +428,11 @@
     <div class="custom-cursor"></div>
 
     <header>
-        <div style="font-size:1.5rem;font-weight:700;letter-spacing:2px;color:#39ff14;">MotionSite</div>
-        <nav>
-            <a href="#features">Features</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+        <div class="logo" role="banner">MotionSite</div>
+        <nav role="navigation" aria-label="Main navigation">
+            <a href="#features" aria-label="View features">Features</a>
+            <a href="#about" aria-label="About us">About</a>
+            <a href="#contact" aria-label="Contact us">Contact</a>
         </nav>
     </header>
     <!-- Enhanced hero section -->
@@ -390,11 +481,18 @@
         </section>
         <section id="contact" style="text-align:center; margin:4rem 0;">
             <h2 style="font-size:2rem; margin-bottom:1rem; color:#ff00cc;">Contact Us</h2>
-            <form style="max-width:400px;margin:auto;">
-                <input type="text" placeholder="Your Name" required style="width:100%;padding:0.8rem;margin-bottom:1rem;border-radius:8px;border:none;">
-                <input type="email" placeholder="Your Email" required style="width:100%;padding:0.8rem;margin-bottom:1rem;border-radius:8px;border:none;">
-                <textarea placeholder="Message" required style="width:100%;padding:0.8rem;margin-bottom:1rem;border-radius:8px;border:none;height:100px;"></textarea>
-                <button type="submit" class="cta-btn" style="width:100%;">Send Message</button>
+            <!-- Fix form accessibility -->
+            <form style="max-width:400px;margin:auto;" role="form" aria-label="Contact form">
+                <label for="name" class="visually-hidden">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                
+                <label for="email" class="visually-hidden">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                
+                <label for="message" class="visually-hidden">Message</label>
+                <textarea id="message" name="message" placeholder="Message" required></textarea>
+                
+                <button type="submit" class="cta-btn">Send Message</button>
             </form>
         </section>
     </main>
@@ -417,31 +515,35 @@
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
-
+        // Remove duplicate initialization code and merge into one DOMContentLoaded event
         document.addEventListener('DOMContentLoaded', () => {
-            // Fix Locomotive Scroll initialization
-            const scrollContainer = document.querySelector('[data-scroll-container]');
-            if (scrollContainer) {
+            // Initialize AOS
+            AOS.init({
+                duration: 1000,
+                once: true,
+                disable: 'mobile' // Disable on mobile for better performance
+            });
+
+            // Initialize Locomotive Scroll with error handling
+            try {
                 const scroll = new LocomotiveScroll({
-                    el: scrollContainer,
+                    el: document.querySelector('[data-scroll-container]'),
                     smooth: true,
-                    smartphone: {
-                        smooth: false
-                    },
-                    tablet: {
-                        smooth: false
-                    }
+                    lerp: 0.075, // Lower value for smoother scrolling
+                    multiplier: 0.5,
+                    smartphone: { smooth: false },
+                    tablet: { smooth: false }
                 });
 
-                // Update scroll on page load
-                setTimeout(() => {
-                    scroll.update();
-                }, 1000);
+                // Update scroll for dynamic content
+                setTimeout(() => scroll.update(), 1000);
+                
+                // Update on image load
+                document.querySelectorAll('img').forEach(img => {
+                    img.onload = () => scroll.update();
+                });
+            } catch (error) {
+                console.error('Locomotive Scroll initialization failed:', error);
             }
 
             // Fix particles.js performance
@@ -534,6 +636,44 @@
         // Add error handling
         window.addEventListener('error', (e) => {
             console.error('Page Error:', e.message);
+        });
+
+        // Add performance monitoring
+        const perfObserver = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+                if (entry.lerp > 16) { // More than 1 frame drop
+                    console.warn('Performance issue detected:', entry);
+                }
+            }
+        });
+
+        perfObserver.observe({ entryTypes: ['longtask', 'paint'] });
+
+        // Add error boundary
+        class ErrorBoundary {
+            static init() {
+                window.addEventListener('error', (e) => {
+                    console.error('Page Error:', e.message);
+                    // Disable problematic features gracefully
+                    document.body.classList.add('fallback-mode');
+                });
+
+                window.addEventListener('unhandledrejection', (e) => {
+                    console.error('Unhandled Promise Rejection:', e.reason);
+                });
+            }
+        }
+
+        ErrorBoundary.init();
+
+        // Add visibility change handling
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Pause expensive animations
+                document.body.classList.add('reduced-motion');
+            } else {
+                document.body.classList.remove('reduced-motion');
+            }
         });
     </script>
 </body>
