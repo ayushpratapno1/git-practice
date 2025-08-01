@@ -515,30 +515,27 @@
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Remove duplicate initialization code and merge into one DOMContentLoaded event
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize AOS
             AOS.init({
                 duration: 1000,
                 once: true,
-                disable: 'mobile' // Disable on mobile for better performance
+                disable: 'mobile'
             });
 
             // Initialize Locomotive Scroll with error handling
+            let scroll;
             try {
-                const scroll = new LocomotiveScroll({
+                scroll = new LocomotiveScroll({
                     el: document.querySelector('[data-scroll-container]'),
                     smooth: true,
-                    lerp: 0.075, // Lower value for smoother scrolling
+                    lerp: 0.075,
                     multiplier: 0.5,
                     smartphone: { smooth: false },
                     tablet: { smooth: false }
                 });
 
-                // Update scroll for dynamic content
                 setTimeout(() => scroll.update(), 1000);
-                
-                // Update on image load
                 document.querySelectorAll('img').forEach(img => {
                     img.onload = () => scroll.update();
                 });
@@ -546,134 +543,87 @@
                 console.error('Locomotive Scroll initialization failed:', error);
             }
 
-            // Fix particles.js performance
+            // Initialize Particles.js
             particlesJS('particles-js', {
                 particles: {
-                    number: { 
-                        value: 40, // Reduced for better performance
-                        density: {
-                            enable: true,
-                            value_area: 800
-                        }
-                    },
+                    number: { value: 40, density: { enable: true, value_area: 800 } },
                     color: { value: '#39ff14' },
                     shape: { type: 'circle' },
                     opacity: { value: 0.5 },
                     size: { value: 3 },
                     move: { enable: true, speed: 2 }
                 },
-                retina_detect: false // Disable for better performance
+                retina_detect: false
             });
 
-            // Optimize cursor movement
+            // Custom cursor effect (use transform for smoother movement)
             let cursorTimeout;
             const cursor = document.querySelector('.custom-cursor');
-            
             document.addEventListener('mousemove', (e) => {
                 if (cursor) {
                     clearTimeout(cursorTimeout);
                     cursorTimeout = setTimeout(() => {
-                        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-                    }, 5); // Throttle updates
+                        cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+                    }, 5);
                 }
             });
 
-            // Fix wave animation performance
-            const waves = document.querySelectorAll('#wave1, #wave2');
-            if (waves.length && window.requestAnimationFrame) {
-                waves.forEach(wave => {
-                    const amplitude = wave.id === 'wave1' ? 40 : 30;
-                    const speed = wave.id === 'wave1' ? 1.2 : 0.8;
-                    animateWave(wave.id, amplitude, speed);
-                });
-            }
-        });
-
-        // Initialize Locomotive Scroll
-        const scroll = new LocomotiveScroll({
-            el: document.querySelector('[data-scroll-container]'),
-            smooth: true,
-            multiplier: 1
-        });
-
-        // Initialize Particles.js
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80 },
-                color: { value: '#39ff14' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.5 },
-                size: { value: 3 },
-                move: { enable: true, speed: 2 }
-            }
-        });
-
-        // Custom cursor effect
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.querySelector('.custom-cursor');
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Animate SVG waves
-        function animateWave(id, amplitude, speed) {
-            const wave = document.getElementById(id);
-            let t = 0;
-            function animate() {
-                t += 0.02 * speed;
-                let d = `M0,600 C360,${600+Math.sin(t)*amplitude} 1080,${400+Math.cos(t)*amplitude} 1440,600 L1440,900 L0,900 Z`;
-                if(id === 'wave2') {
-                    d = `M0,700 C480,${900+Math.sin(t)*amplitude} 960,${500+Math.cos(t)*amplitude} 1440,700 L1440,900 L0,900 Z`;
+            // Animate SVG waves
+            function animateWave(id, amplitude, speed) {
+                const wave = document.getElementById(id);
+                if (!wave) return;
+                let t = 0;
+                function animate() {
+                    t += 0.02 * speed;
+                    let d = `M0,600 C360,${600+Math.sin(t)*amplitude} 1080,${400+Math.cos(t)*amplitude} 1440,600 L1440,900 L0,900 Z`;
+                    if(id === 'wave2') {
+                        d = `M0,700 C480,${900+Math.sin(t)*amplitude} 960,${500+Math.cos(t)*amplitude} 1440,700 L1440,900 L0,900 Z`;
+                    }
+                    wave.setAttribute('d', d);
+                    requestAnimationFrame(animate);
                 }
-                wave.setAttribute('d', d);
-                requestAnimationFrame(animate);
+                animate();
             }
-            animate();
-        }
-        animateWave('wave1', 40, 1.2);
-        animateWave('wave2', 30, 0.8);
+            animateWave('wave1', 40, 1.2);
+            animateWave('wave2', 30, 0.8);
 
-        // Add error handling
-        window.addEventListener('error', (e) => {
-            console.error('Page Error:', e.message);
-        });
+            // Add error handling
+            window.addEventListener('error', (e) => {
+                console.error('Page Error:', e.message);
+            });
 
-        // Add performance monitoring
-        const perfObserver = new PerformanceObserver((list) => {
-            for (const entry of list.getEntries()) {
-                if (entry.lerp > 16) { // More than 1 frame drop
-                    console.warn('Performance issue detected:', entry);
+            // Add performance monitoring
+            const perfObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.duration && entry.duration > 16) { // More than 1 frame drop
+                        console.warn('Performance issue detected:', entry);
+                    }
+                }
+            });
+            perfObserver.observe({ entryTypes: ['longtask', 'paint'] });
+
+            // Add error boundary
+            class ErrorBoundary {
+                static init() {
+                    window.addEventListener('error', (e) => {
+                        console.error('Page Error:', e.message);
+                        document.body.classList.add('fallback-mode');
+                    });
+                    window.addEventListener('unhandledrejection', (e) => {
+                        console.error('Unhandled Promise Rejection:', e.reason);
+                    });
                 }
             }
-        });
+            ErrorBoundary.init();
 
-        perfObserver.observe({ entryTypes: ['longtask', 'paint'] });
-
-        // Add error boundary
-        class ErrorBoundary {
-            static init() {
-                window.addEventListener('error', (e) => {
-                    console.error('Page Error:', e.message);
-                    // Disable problematic features gracefully
-                    document.body.classList.add('fallback-mode');
-                });
-
-                window.addEventListener('unhandledrejection', (e) => {
-                    console.error('Unhandled Promise Rejection:', e.reason);
-                });
-            }
-        }
-
-        ErrorBoundary.init();
-
-        // Add visibility change handling
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // Pause expensive animations
-                document.body.classList.add('reduced-motion');
-            } else {
-                document.body.classList.remove('reduced-motion');
-            }
+            // Add visibility change handling
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    document.body.classList.add('reduced-motion');
+                } else {
+                    document.body.classList.remove('reduced-motion');
+                }
+            });
         });
     </script>
 </body>
